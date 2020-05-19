@@ -3,7 +3,7 @@
 基于WebDav的安卓封装库
 
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![](https://img.shields.io/badge/version-0.0.1-yellow.svg)](https://bintray.com/paul623/EventReminder/eventreminder/0.0.3)
+[![](https://img.shields.io/badge/version-0.0.1-yellow.svg)](https://bintray.com/beta/#/paul623/maven/wdsyncer?tab=overview)
 
 原博客：[WebDav for Android](https://www.cnblogs.com/robotpaul/p/12005045.html)
 
