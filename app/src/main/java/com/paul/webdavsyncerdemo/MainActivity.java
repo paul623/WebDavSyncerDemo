@@ -3,10 +3,13 @@ package com.paul.webdavsyncerdemo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +22,7 @@ import com.paul623.wdsyncer.model.DavData;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView=findViewById(R.id.tv);
+        checkPermission();
+    }
+
+    private void checkPermission() {
+        int readExternalStoragePermissionResult = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+        if(readExternalStoragePermissionResult != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},1);
+        }
     }
 
     public void upLoad(View view) {
@@ -112,5 +124,32 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+    /**
+     * 测试上传文件
+     * 先在本地私有路径下生成test.txt，然后读取并上传
+     * 目前还没有做文件上传进度的功能
+     * */
+    public void upLoadFile(View view)  {
+        SyncConfig config=new SyncConfig(MainActivity.this);
+        //TODO
+        //config.setPassWord("你的密码");
+        //config.setUserAccount("你的账户");
+        SyncManager syncManager=new SyncManager(MainActivity.this);
+        syncManager.uploadFile("testFile.txt", "WDSyncer", FileTools.readFile(MainActivity.this), new OnSyncResultListener() {
+            @Override
+            public void onSuccess(String result) {
+                Looper.prepare();
+                Toast.makeText(MainActivity.this,result,Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+            @Override
+            public void onError(String errorMsg) {
+                Looper.prepare();
+                Toast.makeText(MainActivity.this,errorMsg,Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+        });
+
     }
 }

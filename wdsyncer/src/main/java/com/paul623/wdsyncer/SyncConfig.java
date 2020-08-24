@@ -72,4 +72,9 @@ public class SyncConfig {
     public boolean canLogin(){
         return !getUserAccount().equals("") && !getPassWord().equals("") && !getServerUrl().equals("");
     }
+    public void clean(){
+        SharedPreferences.Editor editor=sp.edit();
+        editor.clear();
+        editor.commit();
+    }
 }

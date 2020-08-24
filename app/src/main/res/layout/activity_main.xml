@@ -3,24 +3,46 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical"
+    android:padding="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <Button
-        android:text="上传"
+        android:layout_margin="10dp"
+        android:text="上传（字符串形式）"
+        android:background="@drawable/button_bg"
+        android:textColor="@color/white"
         android:onClick="upLoad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
+        android:layout_margin="10dp"
+        android:background="@drawable/button_bg"
+        android:textColor="@color/white"
+        android:text="上传（文件形式）"
+        android:onClick="upLoadFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_margin="10dp"
+        android:background="@drawable/button_bg"
+        android:textColor="@color/white"
         android:text="下载"
         android:onClick="downLoad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
+        android:layout_margin="10dp"
+        android:background="@drawable/button_bg"
+        android:textColor="@color/white"
         android:text="查看文件列表"
         android:onClick="checkDir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/tv"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ScrollView>
 </LinearLayout>

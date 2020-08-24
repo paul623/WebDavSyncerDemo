@@ -40,13 +40,13 @@ public class SyncManager implements SyncApi {
             Thread T=new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    sardine.setCredentials(syncConfig.getUserAccount(), syncConfig.getPassWord());
                     try {
                         if(!sardine.exists(syncConfig.getServerUrl()+fileLoc+"/")){
                             //若不存在需要创建目录
                             sardine.createDirectory(syncConfig.getServerUrl()+fileLoc+"/");
                         }
                         byte[] data = FileUtils.File2byte(f);
-                        sardine.setCredentials(syncConfig.getUserAccount(), syncConfig.getPassWord());
                         sardine.put(syncConfig.getServerUrl()+fileLoc+"/"+fileName, data);
                         //https://dav.jianguoyun.com/dav/  simpleTime / backup.txt
                         listener.onSuccess(fileLoc+"/"+fileName+",上传成功");
