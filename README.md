@@ -3,7 +3,7 @@
 基于WebDav的安卓封装库
 
 [![](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![](https://img.shields.io/badge/version-0.0.1-yellow.svg)](https://bintray.com/beta/#/paul623/maven/wdsyncer?tab=overview)
+[![](https://img.shields.io/badge/version-0.0.2-yellow.svg)](https://bintray.com/beta/#/paul623/maven/wdsyncer?tab=overview)
 
 原博客：[WebDav for Android](https://www.cnblogs.com/robotpaul/p/12005045.html)
 
@@ -15,6 +15,18 @@
 * WebDav同步过程很繁琐
 * 自己做的项目都会涉及到同步功能，不想重复写代码
 
+## 更新日志
+
+```
+2020.08.24 0.0.2
+修复上传文件失败的问题
+新增clean，可以清除本地账户了
+
+下次更新：增加大文件上传支持、上传进度回调
+```
+
+
+
 ## 安全性
 
 * 对于账户和密码做了加密处理
@@ -24,7 +36,7 @@
 在项目中引用即可
 
 ```groovy
-implementation 'com.paul623.wdsyncer:wdsyncer:0.0.1'
+implementation 'com.paul623.wdsyncer:wdsyncer:0.0.2'
 ```
 
 ## 使用教程
