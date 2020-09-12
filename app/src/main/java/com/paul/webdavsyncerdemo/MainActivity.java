@@ -32,10 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler=new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(@NonNull Message msg) {
-            switch (msg.what){
-                case 1:
-                    textView.setText(text);
-                    break;
+            if (msg.what == 1) {
+                textView.setText(text);
             }
             return false;
         }
@@ -56,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void upLoad(View view) {
-        SyncConfig config=new SyncConfig(MainActivity.this);
-        //TODO
-        //config.setPassWord("你的密码");
-        //config.setUserAccount("你的账户");
         SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.uploadString("test.txt", "WDSyncer", "如你所见，WebDavSyncer已经配置成功！", new OnSyncResultListener() {
             @Override
@@ -79,10 +73,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void downLoad(View view) {
-        SyncConfig config=new SyncConfig(MainActivity.this);
-        //TODO
-        //config.setPassWord("你的密码");
-        //config.setUserAccount("你的账户");
         SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.downloadString("test.txt", "WDSyncer", new OnSyncResultListener() {
             @Override
@@ -102,10 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkDir(View view) {
-        SyncConfig config=new SyncConfig(MainActivity.this);
-        //TODO
-        //config.setPassWord("你的密码");
-        //config.setUserAccount("你的账户");
+        Toast.makeText(MainActivity.this,"读取中,请稍后",Toast.LENGTH_SHORT).show();
         SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.listAllFile("WDSyncer", new OnListFileListener() {
             @Override
@@ -121,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onError(String errorMsg) {
-
+                Log.d("MainActivity","请求失败:"+errorMsg);
             }
         });
     }
@@ -131,10 +118,6 @@ public class MainActivity extends AppCompatActivity {
      * 目前还没有做文件上传进度的功能
      * */
     public void upLoadFile(View view)  {
-        SyncConfig config=new SyncConfig(MainActivity.this);
-        //TODO
-        //config.setPassWord("你的密码");
-        //config.setUserAccount("你的账户");
         SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.uploadFile("testFile.txt", "WDSyncer", FileTools.readFile(MainActivity.this), new OnSyncResultListener() {
             @Override

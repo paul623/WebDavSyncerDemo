@@ -44,7 +44,7 @@ publish{
     userOrg='paul623'
     groupId='com.paul623.wdsyncer'
     artifactId='wdsyncer'
-    publishVersion='0.0.2'
+    publishVersion='0.0.3'
     desc='Make Android WebDav Sync more easier'
     website='https://github.com/paul623/WebDavSyncerDemo'
 }

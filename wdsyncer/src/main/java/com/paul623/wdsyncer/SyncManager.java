@@ -48,7 +48,6 @@ public class SyncManager implements SyncApi {
                         }
                         byte[] data = FileUtils.File2byte(f);
                         sardine.put(syncConfig.getServerUrl()+fileLoc+"/"+fileName, data);
-                        //https://dav.jianguoyun.com/dav/  simpleTime / backup.txt
                         listener.onSuccess(fileLoc+"/"+fileName+",上传成功");
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -77,7 +76,6 @@ public class SyncManager implements SyncApi {
                         }
                         byte[] data = content.getBytes();
                         sardine.put(syncConfig.getServerUrl()+fileLoc+"/"+fileName, data);
-                        //https://dav.jianguoyun.com/dav/  simpleTime / backup.txt
                         listener.onSuccess(fileLoc+"/"+fileName+",上传成功");
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -138,7 +136,7 @@ public class SyncManager implements SyncApi {
                 @Override
                 public void run() {
                     sardine.setCredentials(syncConfig.getUserAccount(), syncConfig.getPassWord());
-                    InputStream inputStream= null;
+                    InputStream inputStream;
                     try {
                         inputStream = sardine.get(syncConfig.getServerUrl()+fileLoc+"/"+fileName);
                         //设置输入缓冲区
@@ -173,7 +171,8 @@ public class SyncManager implements SyncApi {
                 public void run() {
                     sardine.setCredentials(syncConfig.getUserAccount(), syncConfig.getPassWord());
                     try {
-                        List<DavResource> resources = sardine.list("https://dav.jianguoyun.com/dav/"+dir);//如果是目录一定别忘记在后面加上一个斜杠
+                        List<DavResource> resources = sardine.list(syncConfig.getServerUrl()+dir);//如果是目录一定别忘记在后面加上一个斜杠
+                        Log.d("测试","拿到请求地址："+syncConfig.getServerUrl());
                         List<DavData> davData=new ArrayList<>();
                         for(DavResource i:resources){
                             davData.add(new DavData(i));
