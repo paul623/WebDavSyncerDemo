@@ -41,7 +41,7 @@
 在项目中引用即可
 
 ```groovy
-implementation 'com.paul623.wdsyncer:wdsyncer:0.0.2'
+implementation 'com.paul623.wdsyncer:wdsyncer:0.0.3'
 ```
 
 ## 使用教程
