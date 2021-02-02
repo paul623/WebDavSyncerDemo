@@ -19,7 +19,9 @@
 
 ## 更新日志
 
-```
+```java
+2021.02.01 0.0.4
+新增支持自定义加密解密方式
 2020.08.24 0.0.3
 修复了查看路径文件服务器地址不生效的问题
 调整了Demo中的部分逻辑
@@ -30,18 +32,17 @@
 下次更新：增加大文件上传支持、上传进度回调
 ```
 
-
-
 ## 安全性
 
 * 对于账户和密码做了加密处理
+* 支持自定义加密方式
 
 ## 食用方法
 
 在项目中引用即可
 
 ```groovy
-implementation 'com.paul623.wdsyncer:wdsyncer:0.0.3'
+implementation 'com.paul623.wdsyncer:wdsyncer:0.0.4'
 ```
 
 ## 使用教程
@@ -104,7 +105,52 @@ config.setPassWord("你的密码");
 config.setUserAccount("你的账户");
 ```
 
-#### 2.调用并实现回调
+#### 2.配置加密解密方式
+
+💡0.0.4新增
+
+如需要自己实现加密解密方式，请实现Encryption接口
+
+```java
+public interface Encryption {
+    //加密
+    public String encode(String key);
+    //解密
+    public String decode(String password);
+}
+```
+
+如
+
+```java
+public class ExampleEncryption implements Encryption {
+    @Override
+    public String encode(String key) {
+        return key+"&";
+    }
+
+    @Override
+    public String decode(String password) {
+        return password.split("&")[0];
+    }
+}
+```
+
+在配置的时候使用
+
+```java
+ SyncConfig config=new SyncConfig(this,new DefaultEncryption());
+```
+
+同时，对应的SyncManager
+
+```java
+ SyncManager syncManager=new SyncManager(this,new DefaultEncryption());
+```
+
+<u>**特别注意：SyncConfig传入Encryption后对应的SyncManager必须传入相同的Encryption，否则会抛出异常或者登录失败。**</u>
+
+#### 3.调用并实现回调
 
 由于所有操作都必须在线程中执行，故你需要自行处理线程操作，这里以上传为例。
 
@@ -134,6 +180,24 @@ config.setUserAccount("你的账户");
 更多例子请查看项目代码。
 
 文件上传下载我没有测试，如果有问题请在issue中提交告诉我
+
+## 常见的出错类型
+
+1.请求失败:出错了，javax.net.ssl.SSLHandshakeException: Chain validation failed
+
+*这个一般是手机的时间不对，导致握手失败。请检查模拟器或者手机的时间设置是否和当地地区时间相同*
+
+2.请求失败:出错了，com.thegrizzlylabs.sardineandroid.impl.SardineException: Error contacting https://dav.jianguoyun.com/dav/WDSyncer (401 )
+
+*这个是账户用户名或者密码不正确*
+
+3.Unable to start activity ComponentInfo{com.paul.webdavsyncerdemo/com.paul.webdavsyncerdemo.MainActivity}: java.lang.RuntimeException: 请配置Encryotion
+
+*这是由于你在SyncConfig中设置了Encryption而在SyncManager中没有设置*
+
+4.java.lang.RuntimeException: Unable to start activity ComponentInfo{com.paul.webdavsyncerdemo/com.paul.webdavsyncerdemo.MainActivity}: java.lang.RuntimeException: Config中未配置Encryotion
+
+*这是由于你在SyncConfig没有配置Encryption而在SyncManager中设置了*
 
 ## 兼容性
 

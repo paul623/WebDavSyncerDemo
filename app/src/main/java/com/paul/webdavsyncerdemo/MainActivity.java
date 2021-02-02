@@ -19,6 +19,7 @@ import com.paul623.wdsyncer.SyncManager;
 import com.paul623.wdsyncer.api.OnListFileListener;
 import com.paul623.wdsyncer.api.OnSyncResultListener;
 import com.paul623.wdsyncer.model.DavData;
+import com.paul623.wdsyncer.utils.DefaultEncryption;
 
 import org.w3c.dom.Text;
 
@@ -38,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     });
+    SyncManager syncManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         textView=findViewById(R.id.tv);
         checkPermission();
+        syncManager=new SyncManager(this,new DefaultEncryption());
     }
 
     private void checkPermission() {
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void upLoad(View view) {
-        SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.uploadString("test.txt", "WDSyncer", "如你所见，WebDavSyncer已经配置成功！", new OnSyncResultListener() {
             @Override
             public void onSuccess(String result) {
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void downLoad(View view) {
-        SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.downloadString("test.txt", "WDSyncer", new OnSyncResultListener() {
             @Override
             public void onSuccess(String result) {
@@ -93,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void checkDir(View view) {
         Toast.makeText(MainActivity.this,"读取中,请稍后",Toast.LENGTH_SHORT).show();
-        SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.listAllFile("WDSyncer", new OnListFileListener() {
             @Override
             public void listAll(List<DavData> davResourceList) {
@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
      * 目前还没有做文件上传进度的功能
      * */
     public void upLoadFile(View view)  {
-        SyncManager syncManager=new SyncManager(MainActivity.this);
         syncManager.uploadFile("testFile.txt", "WDSyncer", FileTools.readFile(MainActivity.this), new OnSyncResultListener() {
             @Override
             public void onSuccess(String result) {

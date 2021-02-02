@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -44,7 +44,7 @@ publish{
     userOrg='paul623'
     groupId='com.paul623.wdsyncer'
     artifactId='wdsyncer'
-    publishVersion='0.0.3'
+    publishVersion='0.0.4'
     desc='Make Android WebDav Sync more easier'
     website='https://github.com/paul623/WebDavSyncerDemo'
 }

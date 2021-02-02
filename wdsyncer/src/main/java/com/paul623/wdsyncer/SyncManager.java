@@ -3,6 +3,7 @@ package com.paul623.wdsyncer;
 import android.content.Context;
 import android.util.Log;
 
+import com.paul623.wdsyncer.api.Encryption;
 import com.paul623.wdsyncer.api.OnListFileListener;
 import com.paul623.wdsyncer.api.OnSyncResultListener;
 import com.paul623.wdsyncer.api.SyncApi;
@@ -11,6 +12,8 @@ import com.paul623.wdsyncer.utils.FileUtils;
 import com.thegrizzlylabs.sardineandroid.DavResource;
 import com.thegrizzlylabs.sardineandroid.Sardine;
 import com.thegrizzlylabs.sardineandroid.impl.OkHttpSardine;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,17 +24,27 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class SyncManager implements SyncApi {
     private Context context;
     private Sardine sardine;
     private SyncConfig syncConfig;
-    public SyncManager(Context context){
+    public SyncManager(Context context) {
         this.context=context;
         sardine=new OkHttpSardine();
+        if(SyncConfig.getDiyEncryption(context)){
+            throw new RuntimeException("请配置Encryotion");
+        }
         syncConfig =new SyncConfig(context);
+    }
+    public SyncManager(Context context, @NotNull Encryption encryption){
+        this.context=context;
+        sardine=new OkHttpSardine();
+        if(!SyncConfig.getDiyEncryption(context)){
+            throw new RuntimeException("Config中未配置Encryotion");
+        }
+        syncConfig =new SyncConfig(context, encryption);
     }
 
     @Override
@@ -172,7 +185,6 @@ public class SyncManager implements SyncApi {
                     sardine.setCredentials(syncConfig.getUserAccount(), syncConfig.getPassWord());
                     try {
                         List<DavResource> resources = sardine.list(syncConfig.getServerUrl()+dir);//如果是目录一定别忘记在后面加上一个斜杠
-                        Log.d("测试","拿到请求地址："+syncConfig.getServerUrl());
                         List<DavData> davData=new ArrayList<>();
                         for(DavResource i:resources){
                             davData.add(new DavData(i));
@@ -214,4 +226,6 @@ public class SyncManager implements SyncApi {
             listener.onError("请先配置账户和服务器地址！");
         }
     }
+
+
 }
