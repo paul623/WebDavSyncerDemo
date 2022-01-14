@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.github.dcendents.android-maven'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -44,7 +45,7 @@ publish{
     userOrg='paul623'
     groupId='com.paul623.wdsyncer'
     artifactId='wdsyncer'
-    publishVersion='0.0.4'
+    publishVersion='0.0.5'
     desc='Make Android WebDav Sync more easier'
     website='https://github.com/paul623/WebDavSyncerDemo'
 }
