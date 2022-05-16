@@ -55,9 +55,14 @@ public class SyncManager implements SyncApi {
                 public void run() {
                     sardine.setCredentials(syncConfig.getUserAccount(), syncConfig.getPassWord());
                     try {
-                        if(!sardine.exists(syncConfig.getServerUrl()+fileLoc+"/")){
-                            //若不存在需要创建目录
-                            sardine.createDirectory(syncConfig.getServerUrl()+fileLoc+"/");
+                        String[] splitLoc = fileLoc.split("/");
+                        StringBuilder fullPath= new StringBuilder();
+                        for(int i=1;i< splitLoc.length;i++){
+                            fullPath.append(splitLoc[i]).append("/");
+                            if(!sardine.exists(syncConfig.getServerUrl()+"/"+fullPath)){
+                                //若不存在需要创建目录
+                                sardine.createDirectory(syncConfig.getServerUrl()+"/"+fullPath);
+                            }
                         }
                         byte[] data = FileUtils.File2byte(f);
                         sardine.put(syncConfig.getServerUrl()+fileLoc+"/"+fileName, data);
