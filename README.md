@@ -20,6 +20,8 @@
 ## 更新日志
 
 ```java
+2023.06.09 0.0.6
+修复依赖找不到的问题
 2022.01.14 0.0.5
 本版本没有新增内容
 迁移库至JitPack
@@ -41,22 +43,26 @@
 * 支持自定义加密方式
 
 ## 食用方法
+
 在项目中引用即可
 最新版本：[![](https://jitpack.io/v/paul623/WebDavSyncerDemo.svg)](https://jitpack.io/#paul623/WebDavSyncerDemo/) 
 Add it in your root build.gradle at the end of repositories:
+
 ```groovy
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
- ```
+        repositories {
+            ...
+            maven { url 'https://jitpack.io' }
+        }
+    }
+```
+
 Step 2. Add the dependency
+
 ```groovy
 dependencies {
-	        implementation 'com.github.paul623:WebDavSyncerDemo:0.0.5'
-	}
+            implementation 'com.github.paul623:WebDavSyncerDemo:0.0.5'
+    }
 ```
 
 ## 使用教程
@@ -250,4 +256,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
  limitations under the License.
 ```
-
